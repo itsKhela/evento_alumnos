@@ -8,6 +8,8 @@ import us.lsi.pd.ProblemaPD;
 
 public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	private static ProblemaEventoPD problemaInicial;
+	// propiedad individual -> private static
+	// propiedad compartida -> public static
 	private static Integer presupuesto;
 	private Double valorSolucion = Double.MIN_VALUE;
 	private static List<Comida> comidas;
