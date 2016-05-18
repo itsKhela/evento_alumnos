@@ -30,7 +30,9 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 		return ProblemaEventoPD.problemaInicial;
 	}
 	
-	public static ProblemaEventoPD create()
+	public ProblemaEventoPD(){
+		
+	}
 	
 	@Override
 	public us.lsi.pd.ProblemaPD.Tipo getTipo() {
