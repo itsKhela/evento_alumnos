@@ -1,0 +1,12 @@
+Marisco,12,5.0,entrante,false,false
+Croquetas,5,2.0,entrante,true,false
+Ensalada,3,3.0,entrante,false,true
+Arroz,9,4.0,primero,true,true
+Estofado,6,3.0,primero,true,false
+Crema,5,5.0,primero,true,true
+Dorada,8,6.0,segundo,true,false
+Muslo,6,3.0,segundo,true,false
+Lomo,6,4.0,segundo,true,false
+Tarta,8,3.0,postre,false,false
+Cafe,6,1.0,postre,true,true
+Dulces,6,2.0,postre,false,true
