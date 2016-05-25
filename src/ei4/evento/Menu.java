@@ -4,10 +4,14 @@ import java.util.List;
 
 public class Menu {
 	
-	public List<Comida> comidas;
-	public int votosTotales;
-	public Double presupuestoTotal;
-	public Menu(List<Comida> comidas){
+	private List<Comida> comidas;
+	private int votosTotales;
+	private Double presupuestoTotal;
+	private Boolean contieneVegetariano, contieneFrio, 
+	contieneCaliente, contieneEntrante, contienePrimero,
+	contieneSegundo, contienePostre;
+	
+	private Menu(List<Comida> comidas){
 		
 		this.comidas = comidas;
 		
@@ -17,12 +21,29 @@ public class Menu {
 		}		
 	}
 	
-	public Menu(){
+	private Menu(){
 		
 		this.comidas = null;
 		this.votosTotales = 0;
 		this.presupuestoTotal = 0.;
 		
+	}
+	
+	private Menu(Menu m){
+		this(m.comidas);
+	}
+	
+	public static Menu create(){
+		return new Menu();
+	}
+	
+	public static Menu create(List<Comida> comidas){
+		return new Menu(comidas);
+	}
+	
+	public static Menu create(Menu menu) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -42,5 +63,26 @@ public class Menu {
 		
 	}
 	
+	public void add(Comida comida) {
+		
+		if(!comidas.contains(comida)){
+			comidas.add(comida);
+		}
+		
+	}
 	
+	public void remove(Comida c){
+		if(comidas.contains(c)){
+			comidas.remove(c);
+		}
+	}
+	
+	public Comida last(){
+		return comidas.get(comidas.size()-1);
+	}
+	
+	public void calculaPropiedadesDerivadas(){
+		
+	}
+
 }

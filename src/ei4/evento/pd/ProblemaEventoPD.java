@@ -21,7 +21,7 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	private int index;	
 	
 	//propiedades compartidas:
-	public static List<Comida> comidasDisponibles;
+	public static List<Comida> comidasDisponibles = null;
 	public static int numeroDeComidas;
 	
 	public static ProblemaEventoPD create(String fichero, Double presupuesto) {
@@ -42,9 +42,9 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	}
 	
 
-	private Double costeAcumulado;
-	private Double presupuestoRestante;
-	private Integer votosAcumulados;
+	private Double costeAcumulado = 0.;
+	private Double presupuestoRestante = 0.;
+	private Integer votosAcumulados = 0;
 	
 	private ProblemaEventoPD(int index, Double costeAcumulado, Integer votosAcumulados){
 		
@@ -131,7 +131,7 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	
 	@Override
 	public Menu getSolucionReconstruida(Sp<Comida> sp) {
-		Menu m = new Menu();;
+		Menu m = Menu.create();;
 		m.add(ProblemaEventoPD.comidasDisponibles.get(this.index), sp.alternativa);
 		return m;
 	}
