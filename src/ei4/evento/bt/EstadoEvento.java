@@ -40,14 +40,13 @@ public class EstadoEvento implements EstadoBT<Menu, Comida> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return menu.numeroDeComidas();
 	}
 
 	@Override
-	public boolean isFinal() {
-		// TODO Auto-generated method stub
+	public boolean isFinal() {//TODO:
 		return false;
+		
 	}
 
 	@Override
@@ -73,6 +72,4 @@ public class EstadoEvento implements EstadoBT<Menu, Comida> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	//TODO
-
 }
