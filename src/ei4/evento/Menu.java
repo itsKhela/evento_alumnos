@@ -7,7 +7,6 @@ public class Menu {
 	public List<Comida> comidas;
 	public int votosTotales;
 	public Double presupuestoTotal;
-
 	public Menu(List<Comida> comidas){
 		
 		this.comidas = comidas;

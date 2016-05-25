@@ -17,7 +17,7 @@ public class TestEventoPD {
 		System.out.println("Presupuesto total: " + ProblemaEvento.presupuestoTotal);
 		System.out.println("------");
 		
-		//TODO
+		ProblemaEventoPD  p = ProblemaEventoPD.create("ficheros/objetosmochila.txt", ProblemaEvento.presupuestoTotal.doubleValue());
 		AlgoritmoPD<Menu, Comida> a = Algoritmos.createPD(p);
 		a.ejecuta();
 		if (a.solucionesParciales.get(p) != null){

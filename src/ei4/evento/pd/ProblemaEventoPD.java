@@ -1,5 +1,6 @@
 package ei4.evento.pd;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.google.common.base.Preconditions;
@@ -55,7 +56,7 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	}
 	
 	@Override
-	public us.lsi.pd.ProblemaPD.Tipo getTipo() {
+	public ProblemaPD.Tipo getTipo() {
 		return Tipo.Max;
 	}
 	
@@ -101,12 +102,25 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 		return Sp.create(a, votos);
 	}
 	
+	private Boolean constraints(Comida a){
+		
+		return (this.costeAcumulado+a.getPrecio() <= presupuestoInicial);
+		
+	}
+	
+	@SuppressWarnings("null")
 	@Override
 	// TODO: dont have a clue...
 	public List<Comida> getAlternativas() {
-		List<Comida> ls = Stream.rangeClosed(0, ProblemaEventoPD.multiplicidadesMaximas.get(this.index))
-				.filter(x -> this.constraints(x)).boxed().collect(Collectors.toList());
-		Collections.reverse(ls);
+		
+		List<Comida> ls = null;
+		
+		for(Comida c : comidasDisponibles){
+			if(constraints(c)){
+				ls.add(c);
+			}
+		}		
+		
 		return ls;
 	}
 	
