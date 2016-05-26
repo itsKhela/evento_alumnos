@@ -91,17 +91,7 @@ public class Menu {
 				+ presupuestoTotal+ "]";
 	}
 
-	public void add(Comida comida, Comida alternativa) {
-		
-		if(!comidas.contains(comida)){
-			if (!comidas.contains(alternativa)){
-				comidas.add(alternativa);
-			}
-			comidas.add(comida);
-		}
-		
-	}
-	
+
 	public void add(Comida comida) {
 		
 		if(!comidas.contains(comida)){
@@ -114,24 +104,6 @@ public class Menu {
 			default: break;
 			}
 		}
-		
-	}
-	
-	public void remove(Comida c){
-		if(comidas.contains(c)){
-			comidas.remove(c);
-		}
-	}
-	
-	public int numeroDeComidas(){
-		return this.comidas.size();
-	}
-	
-	public Comida last(){
-		return comidas.get(comidas.size()-1);
-	}
-	
-	public void calculaPropiedadesDerivadas(){
 		
 	}
 
