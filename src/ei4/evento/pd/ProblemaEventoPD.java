@@ -24,7 +24,7 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	public static ProblemaEventoPD create(String fichero, Double presupuesto) {
 		ProblemaEvento.leeComidas(fichero);
 		ProblemaEventoPD.presupuesto = presupuesto;
-		ProblemaEventoPD.problemaInicial = new ProblemaEventoPD(0, 0., 0);
+		ProblemaEventoPD.problemaInicial = new ProblemaEventoPD(0, 0., 0, 0, 0, new boolean[4]);
 
 		for (List<Comida> m : ProblemaEvento.comidasPorTipo.values()) {
 			for (Comida c : m) {
@@ -34,29 +34,60 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 				}
 			}
 		}
+		
+		Collections.sort(ProblemaEventoPD.comidasDisponibles, (x, y) -> -1 * x.getVotos().compareTo(y.getVotos()));
 
 		return ProblemaEventoPD.problemaInicial;
 	}
 
-	public static ProblemaEventoPD create(int i, Double costeAcumulado, Integer votosAcumulados) {
-		ProblemaEventoPD p = new ProblemaEventoPD(i, costeAcumulado, votosAcumulados);
+	public static ProblemaEventoPD create(int i, Double costeAcumulado, Integer votosAcumulados,
+			Integer numPlatosCalientesAcum, Integer numPlatosVegetarianosAcum, boolean[] tieneTiposPlato) {
+		ProblemaEventoPD p = new ProblemaEventoPD(i, costeAcumulado, votosAcumulados, numPlatosCalientesAcum,
+				numPlatosVegetarianosAcum, tieneTiposPlato);
 		return p;
 	}
 
 	private Double costeAcumulado = 0.;
 	private Double presupuestoRestante = 0.;
 	private Integer votosAcumulados = 0;
+	private Integer numPlatosCalientesAcum, numPlatosVegetarianosAcum;
+	private boolean[] tieneTiposDePlato; // 0 - tiene entrante, 1 tiene primero,
+											// 2 - tiene segundo, 3 - tiene
+											// postre
 
-	private ProblemaEventoPD(int index, Double costeAcumulado, Integer votosAcumulados) {
+	private ProblemaEventoPD(int index, Double costeAcumulado, Integer votosAcumulados, Integer numPlatosCalientesAcum,
+			Integer numPlatosVegetarianosAcum, boolean[] tieneTiposPlato) {
 
 		this.index = index;
 		this.votosAcumulados = votosAcumulados;
 		this.costeAcumulado = costeAcumulado;
 		this.presupuestoRestante = this.presupuestoRestante - costeAcumulado;
+		this.numPlatosCalientesAcum = numPlatosCalientesAcum;
+		this.numPlatosVegetarianosAcum = numPlatosVegetarianosAcum;
+		this.tieneTiposDePlato = tieneTiposPlato;
 
 	}
 
 	private Boolean constraints(Comida c) {
+		boolean res = true;
+		switch (c.getTipo()) {
+		case "entrante":
+			res = !tieneTiposDePlato[0];
+			break;
+		case "primero":
+			res = !tieneTiposDePlato[1];
+			break;
+		case "segundo":
+			res = !tieneTiposDePlato[2];
+			break;
+		case "postre":
+			res = !tieneTiposDePlato[3];
+			break;
+		}
+		if (!res) {
+			return false;
+		}
+
 		return (this.costeAcumulado + c.getPrecio() <= presupuesto);
 	}
 
@@ -85,7 +116,17 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 
 	@Override
 	public boolean esCasoBase() {
-		return (this.presupuestoRestante == 0 || index == ProblemaEventoPD.numeroDeComidas);
+		
+		boolean yaContieneTodosLosTiposDePlato = true;
+		
+		for(boolean b : this.tieneTiposDePlato){
+			if(!b){
+				yaContieneTodosLosTiposDePlato = false;
+				break;
+			}
+		}
+		
+		return (this.presupuestoRestante == 0 || index == ProblemaEventoPD.numeroDeComidas || yaContieneTodosLosTiposDePlato);
 	}
 
 	@Override
@@ -102,7 +143,39 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 		Preconditions.checkArgument(np == 0);
 		Double costeAcumulado = this.costeAcumulado + a.getPrecio();
 		Integer votosAcumulados = this.votosAcumulados + a.getVotos();
-		return ProblemaEventoPD.create(index + 1, costeAcumulado, votosAcumulados);
+		boolean[] tieneTiposDePlato = this.tieneTiposDePlato;
+
+		Integer numPlatosCalientesAcum = this.numPlatosCalientesAcum;
+		Integer numPlatosVegetarianosAcum = this.numPlatosVegetarianosAcum;
+
+		if (a.esCaliente()) {
+			numPlatosCalientesAcum += 1;
+		}
+
+		if (a.esVegetariano()) {
+			numPlatosVegetarianosAcum += 1;
+		}
+
+		switch (a.getTipo()) {
+		case "entrante":
+			tieneTiposDePlato[0] = true;
+			break;
+		case "primero":
+			tieneTiposDePlato[1] = true;
+			break;
+		case "segundo":
+			tieneTiposDePlato[2] = true;
+			break;
+		case "postre":
+			tieneTiposDePlato[3] = true;
+			break;
+		default:
+			break;
+
+		}
+
+		return ProblemaEventoPD.create(index + 1, costeAcumulado, votosAcumulados, numPlatosCalientesAcum,
+				numPlatosVegetarianosAcum, tieneTiposDePlato);
 	}
 
 	@Override
