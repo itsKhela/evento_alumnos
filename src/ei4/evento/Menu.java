@@ -1,5 +1,6 @@
 package ei4.evento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
@@ -23,7 +24,7 @@ public class Menu {
 	
 	private Menu(){
 		
-		this.comidas = null;
+		this.comidas = new ArrayList<Comida>();
 		this.votosTotales = 0;
 		this.presupuestoTotal = 0.;
 		
