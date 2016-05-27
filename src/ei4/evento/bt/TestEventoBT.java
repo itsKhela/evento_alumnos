@@ -20,7 +20,7 @@ public class TestEventoBT {
 		System.out.println("Presupuesto total: " + ProblemaEvento.presupuestoTotal);
 		System.out.println("------");
 		
-		//TODO
+		ProblemaEventoBT p = ProblemaEventoBT.create(ProblemaEvento.presupuestoTotal.doubleValue());
 		AlgoritmoBT<Menu, Comida> a = Algoritmos.createBT(p);
 		a.ejecuta();
 

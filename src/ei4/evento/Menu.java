@@ -6,11 +6,11 @@ import java.util.List;
 public class Menu {
 	
 	private List<Comida> comidas;
-	private int votosTotales;
+	private Integer votosTotales;
 	private Double presupuestoTotal;
-	private Boolean contieneEntrante, contienePrimero,
-	contieneSegundo, contienePostre;
-	private Integer numPlatosCalientes, numPlatosVegetarianos;
+	
+	private Integer votosAcumulados;
+	private Double presupuestoAcumulado;
 	
 	private Menu(List<Comida> comidas){
 		
@@ -32,6 +32,7 @@ public class Menu {
 	
 	private Menu(Menu m){
 		this(m.comidas);
+		this.votosTotales = m.votosTotales;
 	}
 	
 	public static Menu create(){
@@ -46,7 +47,7 @@ public class Menu {
 		return new Menu(menu);
 	}
 	
-	public static Menu createValido(List<Comida> comidas){
+	/*	public static Menu createValido(List<Comida> comidas){
 		
 		Menu m = new Menu(comidas);
 		
@@ -84,7 +85,7 @@ public class Menu {
 			condition = true;
 		}
 		return condition;
-	}
+	}*/
 
 	@Override
 	public String toString() {
@@ -94,18 +95,17 @@ public class Menu {
 
 
 	public void add(Comida comida) {
-		
-		if(!comidas.contains(comida)){
-			comidas.add(comida);
-			switch(comida.getTipo()){
-			case "entrante": this.contieneEntrante = true; break;
-			case "primero": this.contienePrimero = true; break;
-			case "segundo": this.contieneSegundo = true; break;
-			case "postre": this.contienePostre = true; break;
-			default: break;
-			}
-		}
+		comidas.add(comida);
+		this.votosAcumulados += comida.getVotos();
+		this.presupuestoAcumulado += comida.getPrecio();
 		
 	}
-
+		
+	public List<Comida> getComidasDisponibles(){
+		return this.comidas;
+	}
+	
+	public Double getVotos(){
+		return this.votosTotales.doubleValue();
+	}
 }

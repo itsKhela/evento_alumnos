@@ -52,8 +52,7 @@ public class ProblemaEventoPD implements ProblemaPD<Menu, Comida> {
 	private Integer votosAcumulados = 0;
 	private Integer numPlatosCalientesAcum, numPlatosVegetarianosAcum;
 	private boolean[] tieneTiposDePlato; // 0 - tiene entrante, 1 tiene primero,
-											// 2 - tiene segundo, 3 - tiene
-											// postre
+										 // 2 - tiene segundo, 3 - tiene postre
 
 	private ProblemaEventoPD(int index, Double costeAcumulado, Integer votosAcumulados, Integer numPlatosCalientesAcum,
 			Integer numPlatosVegetarianosAcum, boolean[] tieneTiposPlato) {
